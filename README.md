@@ -3,6 +3,8 @@
 Package reqctx provides a way to set http request context without
 creating a shallow copy.
 
+**Please don't use in production!**
+
 Current implementation of WithContext is following:
 ```go
 func (r *Request) WithContext(ctx context.Context) *Request {
@@ -23,6 +25,36 @@ func Set(r *Request, ctx context.Context) {
 	r.ctx = ctx
 }
 ```
+
+So, instead of doing that: 
+```
+func Middleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.WithValue(r.Context(), "foo", "bar")
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+```
+
+You can now do this: 
+```
+package reqctx_test
+
+import (
+	"context"
+	"net/http"
+	
+	"github.com/ernado/reqctx"
+)
+
+func MiddlewareFast(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		reqctx.SetValue(r, "foo", "bar")
+		next.ServeHTTP(w, r)
+	})
+}
+```
+
 
 ## Benchmarks
 
