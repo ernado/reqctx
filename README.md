@@ -27,7 +27,7 @@ func Set(r *Request, ctx context.Context) {
 ```
 
 So, instead of doing that: 
-```
+```go
 func Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.WithValue(r.Context(), "foo", "bar")
@@ -37,7 +37,7 @@ func Middleware(next http.Handler) http.Handler {
 ```
 
 You can now do this: 
-```
+```go
 package reqctx_test
 
 import (
