@@ -50,6 +50,9 @@ import (
 func MiddlewareFast(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		reqctx.SetValue(r, "foo", "bar")
+		// Same as:
+		// ctx := context.WithValue(r.Context(), "foo", "bar")
+		// reqctx.Set(r, ctx)
 		next.ServeHTTP(w, r)
 	})
 }
