@@ -61,7 +61,7 @@ func MiddlewareFast(next http.Handler) http.Handler {
 ```
 goos: linux
 goarch: amd64
-BenchmarkSet-12                 1000000000               0.532 ns/op           0 B/op          0 allocs/op
-BenchmarkWithContext-12         26447012                45.8 ns/op           128 B/op          1 allocs/op
+BenchmarkSet-12          1000000000  0.532 ns/op  0 B/op    0 allocs/op
+BenchmarkWithContext-12  26447012    45.8 ns/op   128 B/op  1 allocs/op
 PASS
 ```
